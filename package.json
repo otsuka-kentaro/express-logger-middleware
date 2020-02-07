@@ -1,6 +1,6 @@
 {
   "name": "@k-o/express-logger-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,7 @@
   "bugs": {
     "url": "https://github.com/otsuka-kentaro/express-logger-middleware/issues"
   },
-  "homepage": "https://github.com/otsuka-kentaro/express-logger-middleware#readme"
+  "publishConfig": {
+    "access": "public"
+  }
 }

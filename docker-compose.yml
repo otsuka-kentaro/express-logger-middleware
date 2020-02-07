@@ -8,5 +8,8 @@ services:
     volumes:
       - ./express:/app
       - /app/node_modules
+      # behave like installed package
+      - ./index.js:/app/node_modules/@k-o/express-logger-middleware/index.js
+      - ./package.json:/app/node_modules/@k-o/express-logger-middleware/package.json
     ports:
       - 3000:3000

@@ -1,5 +1,5 @@
 {
-  "name": "express-logger-middleware",
+  "name": "@ko/express-logger-middleware",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

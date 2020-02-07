@@ -20,5 +20,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "moment-timezone": "^0.5.27"
   }
 }

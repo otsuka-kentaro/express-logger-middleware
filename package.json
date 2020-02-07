@@ -1,0 +1,22 @@
+{
+  "name": "express-logger-middleware",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/otsuka-kentaro/express-logger-middleware.git"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "otsuka-kentaro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/otsuka-kentaro/express-logger-middleware/issues"
+  },
+  "homepage": "https://github.com/otsuka-kentaro/express-logger-middleware#readme"
+}

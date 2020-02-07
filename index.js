@@ -1,3 +1,5 @@
+const moment = require('moment-timezone')
+
 // see also: https://github.com/trentm/node-bunyan#levels
 const LogLevels = {
   TRACE: 10,
@@ -20,10 +22,24 @@ const ECS_CONTEXT = {
 // remove CorrelationIds
 class Logger {
   constructor({
-    level = process.env.LOG_LEVEL
+    level = process.env.LOG_LEVEL,
+    timeZone = null,
+    timestampFormat = ''
   } = {}) {
-    this.level = (level || 'DEBUG').toUpperCase()
-    this.originalLevel = this.level
+    this.level = (level || 'DEBUG').toUpperCase();
+    this.originalLevel = this.level;
+    this.timestampFormat = timestampFormat;
+    if (timeZone) {
+      moment.tz.setDefault(timeZone);
+    }
+
+    if (this.isEnabled(LogLevels.DEBUG)) {
+      try {
+        console.debug(`logger created with following params\n  level:${this.level}\n  timeZone:${moment()._z.name}`);
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 
   get context() {
@@ -60,6 +76,7 @@ class Logger {
       ...params,
       level,
       sLevel: levelName,
+      '@timestamp': moment().format(this.timestampFormat),
       message
     }
 
@@ -93,42 +110,14 @@ class Logger {
   resetLevel() {
     this.level = this.originalLevel
   }
-
-  static debug(...args) {
-    globalLogger.debug(...args)
-  }
-
-  static info(...args) {
-    globalLogger.info(...args)
-  }
-
-  static warn(...args) {
-    globalLogger.warn(...args)
-  }
-
-  static error(...args) {
-    globalLogger.error(...args)
-  }
-
-  static enableDebug() {
-    return globalLogger.enableDebug()
-  }
-
-  static resetLevel() {
-    globalLogger.resetLevel()
-  }
-
-  static get level() {
-    return globalLogger.level
-  }
 }
 
 
 exports.ECSContextLogger = Logger;
 exports.LogLevels = LogLevels;
 
-exports.loggingRequest = function(logLevel = 'DEBUG') {
-  const logger = new Logger({ level: logLevel });
+exports.loggingRequest = function(options) {
+  const logger = new Logger(options);
 
   return function(req, _, next) {
     try {

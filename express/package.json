@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "description": "test express application for express-logger-middleware",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,0 +1,12 @@
+version: '2.4'
+services:
+  express:
+    container_name: express-logger-middleware-express
+    build:
+      context: ./express
+    env_file: .env
+    volumes:
+      - ./express:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000

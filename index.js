@@ -116,8 +116,16 @@ class Logger {
 exports.ECSContextLogger = Logger;
 exports.LogLevels = LogLevels;
 
-exports.loggingRequest = function(options) {
-  const logger = new Logger(options);
+/**
+ * Logging out express request.
+ * Parameters are ip, ips, path, method, protocol, params, query
+ * in json format.
+ */
+exports.loggingRequest = function(logger) {
+  if (!logger || !(logger instanceof Logger)) {
+    console.warn('logger was created with default options (logger does not specified)');
+    logger = new Logger();
+  }
 
   return function(req, _, next) {
     try {
@@ -134,6 +142,33 @@ exports.loggingRequest = function(options) {
       // guard unexpected error
       console.error(e);
     }
+
+    next();
+  }
+}
+
+/**
+ * Logging out when finish event fired (res.on('event'))
+ */
+exports.loggingResponse = function(logger) {
+  if (!logger || !(logger instanceof Logger)) {
+    console.warn('logger was created with default options (logger does not specified)');
+    logger = new Logger();
+  }
+
+  return function(_req, res, next) {
+    const start = Date.now();
+    res.on('finish', function() {
+      const elapsed = Date.now() - start;
+      try {
+        logger.info({
+          elapsed: elapsed.toLocaleString() + 'ms',
+        })
+      } catch (e) {
+        // guard unexpected error
+        console.error(e);
+      }
+    });
 
     next();
   }

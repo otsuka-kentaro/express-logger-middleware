@@ -1,9 +1,15 @@
 const express = require('express')
-const { ECSContextLogger, loggingRequest, loggingResponse } = require('@k-o/express-logger-middleware')
+const {
+  ECSContextLogger,
+  loggingRequest,
+  loggingResponse,
+  requestContextHelper,
+} = require('@k-o/express-logger-middleware')
 const app = express()
 const port = 3000
 
 const logger = new ECSContextLogger({ timeZone: 'Asia/Tokyo' });
+app.use(requestContextHelper());
 app.use(loggingRequest(logger));
 app.use(loggingResponse(logger));
 app.get('/', (_req, res) => {

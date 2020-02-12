@@ -1,4 +1,5 @@
 const moment = require('moment-timezone')
+const uuid = require('uuid')
 
 // see also: https://github.com/trentm/node-bunyan#levels
 const LogLevels = {
@@ -123,13 +124,13 @@ exports.LogLevels = LogLevels;
  */
 exports.loggingRequest = function(logger) {
   if (!logger || !(logger instanceof Logger)) {
-    console.warn('logger was created with default options (logger does not specified)');
+    console.warn('[loggingRequest] logger was created with default options (logger does not specified)');
     logger = new Logger();
   }
 
   return function(req, _, next) {
     try {
-      logger.info({
+      let data = {
         ip: req.ip,
         ips: req.ips,
         path: req.path,
@@ -137,7 +138,12 @@ exports.loggingRequest = function(logger) {
         protocol: req.protocol,
         params: req.params,
         query: req.query,
-      })
+      };
+      // set request context id
+      if (req.id) {
+        data['requestId'] = req.id;
+      }
+      logger.info(data)
     } catch (e) {
       // guard unexpected error
       console.error(e);
@@ -152,23 +158,44 @@ exports.loggingRequest = function(logger) {
  */
 exports.loggingResponse = function(logger) {
   if (!logger || !(logger instanceof Logger)) {
-    console.warn('logger was created with default options (logger does not specified)');
+    console.warn('[loggingResponse] logger was created with default options (logger does not specified)');
     logger = new Logger();
   }
 
-  return function(_req, res, next) {
+  return function(req, res, next) {
     const start = Date.now();
     res.on('finish', function() {
       const elapsed = Date.now() - start;
       try {
-        logger.info({
+        let data = {
           elapsed: elapsed.toLocaleString() + 'ms',
-        })
+        };
+        // set request context id
+        if (req.id) {
+          data['requestId'] = req.id;
+        }
+        logger.info(data)
       } catch (e) {
         // guard unexpected error
         console.error(e);
       }
     });
+
+    next();
+  }
+}
+
+/**
+ * Add request identify string (UUID v4 string) to request object. (req.id = [UUID_V4])
+ */
+exports.requestContextHelper = function() {
+  return function(req, _res, next) {
+    try {
+      req.id = uuid.v4();
+    } catch (e) {
+      // guard unexpected error
+      console.error(e);
+    }
 
     next();
   }

@@ -28,6 +28,19 @@ app.use(loggingRequest(logger));
 app.use(loggingResponse(logger));
 ```
 
+### Use logger
+```javascript
+const logger = new ECSContextLogger({ timeZone: 'Asia/Tokyo' });
+
+logger.info('message!', {
+  param: 'additional parameter',
+});
+```
+
+available methods: `debug` `info` `error` `warn`
+
+
+
 ## For developing
 ### Setup
 ```bash

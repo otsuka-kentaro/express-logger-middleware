@@ -1,5 +1,10 @@
 # express-logger-middleware
 
+## log example
+```
+{"message":{"ip":"::ffff:192.168.48.1","ips":[],"path":"/","method":"GET","protocol":"http","params":{},"query":{"test":"test","test1":"test"},"elapsed":"2,008ms","requestId":"68f7d2a2-c9c9-42e3-bca9-3cba80b45807"},"containerId":"b7b60c1ff436","nodeVersion":"12.15.0","level":30,"sLevel":"INFO","@timestamp":"2020-05-27T11:12:48+09:00"}
+```
+
 ## express application
 
 First of all, add package to your project.

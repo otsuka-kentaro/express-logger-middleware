@@ -141,7 +141,7 @@ exports.loggingRequest = function(logger) {
           protocol: req.protocol,
           params: req.params,
           query: req.query,
-          elapsed: elapsed.toLocaleString() + 'ms',
+          elapsed: elapsed,
         };
         // set request context id
         if (req.id) {

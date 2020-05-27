@@ -15,7 +15,6 @@ const app = express() // your app
 const {
   ECSContextLogger,
   loggingRequest,
-  loggingResponse,
   requestContextHelper,
 } = require('@k-o/express-logger-middleware')
 
@@ -25,7 +24,6 @@ const logger = new ECSContextLogger({ timeZone: 'Asia/Tokyo' });
 // register functions
 app.use(requestContextHelper());
 app.use(loggingRequest(logger));
-app.use(loggingResponse(logger));
 ```
 
 ### Use logger

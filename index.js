@@ -128,46 +128,19 @@ exports.loggingRequest = function(logger) {
     logger = new Logger();
   }
 
-  return function(req, _, next) {
-    try {
-      let data = {
-        ip: req.ip,
-        ips: req.ips,
-        path: req.path,
-        method: req.method,
-        protocol: req.protocol,
-        params: req.params,
-        query: req.query,
-      };
-      // set request context id
-      if (req.id) {
-        data['requestId'] = req.id;
-      }
-      logger.info(data)
-    } catch (e) {
-      // guard unexpected error
-      console.error(e);
-    }
-
-    next();
-  }
-}
-
-/**
- * Logging out when finish event fired (res.on('event'))
- */
-exports.loggingResponse = function(logger) {
-  if (!logger || !(logger instanceof Logger)) {
-    console.warn('[loggingResponse] logger was created with default options (logger does not specified)');
-    logger = new Logger();
-  }
-
   return function(req, res, next) {
     const start = Date.now();
     res.on('finish', function() {
       const elapsed = Date.now() - start;
       try {
         let data = {
+          ip: req.ip,
+          ips: req.ips,
+          path: req.path,
+          method: req.method,
+          protocol: req.protocol,
+          params: req.params,
+          query: req.query,
           elapsed: elapsed.toLocaleString() + 'ms',
         };
         // set request context id

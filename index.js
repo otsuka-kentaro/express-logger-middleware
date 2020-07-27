@@ -134,7 +134,7 @@ exports.loggingRequest = function(logger) {
       const elapsed = Date.now() - start;
       try {
         let data = {
-          ip: req.ip,
+          ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.ip,
           ips: req.ips,
           path: req.path,
           method: req.method,

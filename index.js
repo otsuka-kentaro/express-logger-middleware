@@ -142,6 +142,7 @@ exports.loggingRequest = function(logger) {
           params: req.params,
           query: req.query,
           elapsed: elapsed,
+          status: res.statusCode,
         };
         // set request context id
         if (req.id) {

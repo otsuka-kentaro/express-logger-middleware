@@ -77,7 +77,7 @@ class Logger {
       ...params,
       level,
       sLevel: levelName,
-      '@timestamp': moment().format(this.timestampFormat),
+      '@timestamp': this.timestampFormat ? moment().format(this.timestampFormat) : moment().toISOString(true),
       message
     }
 

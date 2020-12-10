@@ -18,5 +18,8 @@ app.get('/', (_req, res) => {
 app.get('/exception', (_req, _res) => {
   throw 'exception!'
 });
+app.get('/logger', (_req, _res) => {
+  logger.info('use logger!')
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -72,6 +72,11 @@ class Logger {
       return
     }
 
+    // express plugin として仕様時は構造体になるため、Loggerを直接使用した場合に構造体に変換する
+    if (typeof message !== 'object') {
+      message = { message }
+    }
+
     const logMsg = {
       ...this.context,
       ...params,

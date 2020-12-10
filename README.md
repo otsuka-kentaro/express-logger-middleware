@@ -10,9 +10,11 @@
 First of all, add package to your project.
 ```bash
 $ npm install @k-o/express-logger-middleware
+$ yarn add @k-o/express-logger-middleware
 
 # for update package
-$ npm update @k-o/express-logger-middleware
+$ npm update @k-o/express-logger-middleware@1.1.5
+$ yarn upgrade @k-o/express-logger-middleware@1.1.5
 ```
 
 Register function to your express app.
